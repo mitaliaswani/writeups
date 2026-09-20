@@ -19,6 +19,7 @@ SMB stands for Server Message Block
 What port does SMB use to operate at?  
 SMB uses TCP port `445`
 
+## Enumeration
 To find the service name for Port `445`, we perform the following Nmap scan:
 ```bash
 $ nmap -sV 10.129.53.171
@@ -41,11 +42,11 @@ Nmap done: 1 IP address (1 host up) scanned in 33.47 seconds
 ```
 You can see that both port `445` and port `139` are open. SMB can operate on both ports, but in different ways. Port `139` is used for SMB over NetBIOS which is an older networking service that establishes and manages communication sessions between devices on a network. Port `445` is used by modern SMB to communicate directly over TCP/IP without requiring NetBIOS.  
 
-Once we have discovered that SMB is running on the target, we can connect to the smbclient by running the following command:
+Once we have discovered that SMB is running on the target, we can use `smbclient` to enumerate the SMB shares available on the target by running the following command:
 ```bash
 $ smbclient -L 10.129.53.171
 ```
-When prompted for a password, we simply leave it blank and hit `Enter` to tell the script to move along 
+When prompted for a password, we simply leave it blank and hit `Enter` to tell the script to move along, and check whether we can enumerate its shares without providing a password.
 ```bash
 Password for [WORKGROUP\user]:
 
@@ -63,7 +64,7 @@ As you can see, there are 4 different shares shown:
 - `IPC$` is Inter-Process Communication, which is a special share used for communication between processes over the network, and is not part of the file system.
 - `WorkShares` is a custom share which may contain files or folders specifically intended to be shared with users on the network.
 
-We will try to connect to all the shares except `IPC$`, which is not valuable since it is not browsable like a regular directory. First let us try the `ADMIN$` administrative share.
+We will try to connect to all the shares with potentially browseable files. We will skip `IPC$` for now, because it is primarily used for inter-process communication rather than as a normal file share. First let us try the `ADMIN$` administrative share.
 ```bash
 $ smbclient \\\\10.129.53.171\\ADMIN$
 Password for [WORKGROUP\user]:
@@ -82,8 +83,8 @@ Password for [WORKGROUP\user]:
 Try "help" to get a list of possible commands.
 smb: \> 
 ```
-And it is successful! It is vulnerable and allowed us to log in without the proper credentials
-Now we can browse through the directory, such as in Linux, we can use the command `ls` to list the files and directories inside the current working director.
+And it is successful! We are able to access `WorkShares` without proper credentials, unlike the two administrative shares.
+Now we can browse through the sharea Similar to a Linux shell, we can use the command `ls` to list the files and directories inside the current directory.
 ```bash
 smb: \> ls
   .                                   D        0  Mon Mar 29 04:22:01 2021
@@ -130,4 +131,4 @@ $ cat worknotes.txt
 $ cat flag.txt
 5f61c10dffbc77a704d76016a22f1664
 ```
-The `worknotes.txt` file seems to be hinting at other vulnerable services which could be exploited. The `flag.txt` file however, which is what we are after, contains the flag to complete this lab. Congratulations!
+The `worknotes.txt` file seems to be hinting at other vulnerable services which could be useful for further enumeration of the target. The `flag.txt` file however, which is what we are after, contains the flag to complete this lab. Congratulations!
