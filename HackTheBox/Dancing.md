@@ -12,20 +12,20 @@ Dancing is a very easy Windows machine which introduces the Server Message Block
 | BFT | HackTheBox | Very Easy | DFIR |
 
 ### Task 1
-What does the 3-letter acronym SMB stand for?
+What does the 3-letter acronym SMB stand for?  
 SMB stands for Server Message Block
 
 ### Task 2
-What port does SMB use to operate at?
-SMB uses TCP port 445
+What port does SMB use to operate at?  
+SMB uses TCP port `445`
 
 ### Task 3
-What is the service name for port 445 that came up in our Nmap scan?
-To find the service name for Port 445, we perform the following Nmap scan:
+What is the service name for port `445` that came up in our Nmap scan?  
+To find the service name for Port `445`, we perform the following Nmap scan:
 ```bash
 nmap -sV 10.129.53.171
 ```
-
+The response of the scan is shown below:
 ```bash
 Starting Nmap 7.95 ( https://nmap.org ) at 2026-09-20 02:38 EDT
 Nmap scan report for 10.129.53.171
@@ -41,3 +41,5 @@ Service Info: OS: Windows; CPE: cpe:/o:microsoft:windows
 Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 Nmap done: 1 IP address (1 host up) scanned in 33.47 seconds
 ```
+You can see that both port `445` and port `139` are open. SMB can operate on both ports, but in different ways. Port `139` is used for SMB over NetBIOS which is an older networking service that establishes and manages communication sessions between devices on a network. Port `445` is used by modern SMB to communicate directly over TCP/IP without requiring NetBIOS.
+
