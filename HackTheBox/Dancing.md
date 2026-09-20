@@ -1,8 +1,8 @@
 # Dancing
 ## Scope and Objective 
-Target IP: 10.129.53.171
-Service: SMB
-Environment: HTB Pwnbox
+Target IP: 10.129.53.171  
+Service: SMB  
+Environment: HTB Pwnbox  
 
 ## About
 Dancing is a very easy Windows machine which introduces the Server Message Block (SMB) protocol, its enumeration and its exploitation when misconfigured to allow access without a password.
@@ -41,5 +41,26 @@ Service Info: OS: Windows; CPE: cpe:/o:microsoft:windows
 Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 Nmap done: 1 IP address (1 host up) scanned in 33.47 seconds
 ```
-You can see that both port `445` and port `139` are open. SMB can operate on both ports, but in different ways. Port `139` is used for SMB over NetBIOS which is an older networking service that establishes and manages communication sessions between devices on a network. Port `445` is used by modern SMB to communicate directly over TCP/IP without requiring NetBIOS.
+You can see that both port `445` and port `139` are open. SMB can operate on both ports, but in different ways. Port `139` is used for SMB over NetBIOS which is an older networking service that establishes and manages communication sessions between devices on a network. Port `445` is used by modern SMB to communicate directly over TCP/IP without requiring NetBIOS.  
 
+Once we have discovered that SMB is running on the target, we can connect to the smbclient by running the following command:
+```bash
+smbclient -L 10.129.53.171
+```
+When prompted for a password, we simply leave it blank and hit `Enter` to tell the script to move along 
+```bash
+Password for [WORKGROUP\user]:
+
+	Sharename       Type      Comment
+	---------       ----      -------
+	ADMIN$          Disk      Remote Admin
+	C$              Disk      Default share
+	IPC$            IPC       Remote IPC
+	WorkShares      Disk      
+SMB1 disabled -- no workgroup available
+```
+As you can see, there are 4 different shares shown:
+- `ADMIN$` with the comment `Remote Admin`, which could be interesting to investigate further
+- `C$` is the C:\ directory, bascially where the OS is hosted
+- `IPC$`
+- `WorkShares` is a custom share
