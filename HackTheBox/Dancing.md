@@ -64,3 +64,22 @@ As you can see, there are 4 different shares shown:
 - `C$` is the C:\ directory, bascially where the OS is hosted
 - `IPC$`
 - `WorkShares` is a custom share
+
+```bash
+smbclient \\\\10.129.53.171\\ADMIN$
+Password for [WORKGROUP\user]:
+tree connect failed: NT_STATUS_ACCESS_DENIED
+```
+
+```bash
+smbclient \\\\10.129.53.171\\C$
+Password for [WORKGROUP\user]:
+tree connect failed: NT_STATUS_ACCESS_DENIED
+```
+
+```bash
+smbclient \\\\10.129.53.171\\WorkShares
+Password for [WORKGROUP\user]:
+Try "help" to get a list of possible commands.
+smb: \> 
+```
