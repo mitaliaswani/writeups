@@ -7,9 +7,9 @@ Environment: HTB Pwnbox
 ## About
 Dancing is a very easy Windows machine which introduces the Server Message Block (SMB) protocol, its enumeration and its exploitation when misconfigured to allow access without a password.
 
-| Lab | Platform | Difficulty | Focus |
+| Lab | Platform | Difficulty |
 | --- | --- | --- | --- |
-| BFT | HackTheBox | Very Easy | DFIR |
+| Dancing | HackTheBox | Very Easy |
 
 ### Task 1
 What does the 3-letter acronym SMB stand for?  
