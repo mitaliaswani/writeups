@@ -1,12 +1,43 @@
 # Dancing
 ## Scope and Objective 
-Target
+Target IP: 10.129.53.171
+Service: SMB
+Environment: HTB Pwnbox
+
 ## About
-### Dancing is a very easy Windows machine which introduces the Server Message Block (SMB) protocol, its enumeration and its exploitation when misconfigured to allow access without a password.
+Dancing is a very easy Windows machine which introduces the Server Message Block (SMB) protocol, its enumeration and its exploitation when misconfigured to allow access without a password.
+
 | Lab | Platform | Difficulty | Focus |
 | --- | --- | --- | --- |
 | BFT | HackTheBox | Very Easy | DFIR |
 
+### Task 1
+What does the 3-letter acronym SMB stand for?
+SMB stands for Server Message Block
+
+### Task 2
+What port does SMB use to operate at?
+SMB uses TCP port 445
+
+### Task 3
+What is the service name for port 445 that came up in our Nmap scan?
+To find the service name for Port 445, we perform the following Nmap scan:
 ```bash
-nmap -sC -sV 10.10.10.10
+nmap -sV 10.129.53.171
+```
+
+```bash
+Starting Nmap 7.95 ( https://nmap.org ) at 2026-09-20 02:38 EDT
+Nmap scan report for 10.129.53.171
+Host is up (0.15s latency).
+Not shown: 996 closed tcp ports (conn-refused)
+PORT     STATE SERVICE       VERSION
+135/tcp  open  msrpc         Microsoft Windows RPC
+139/tcp  open  netbios-ssn   Microsoft Windows netbios-ssn
+445/tcp  open  microsoft-ds?
+5985/tcp open  http          Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)
+Service Info: OS: Windows; CPE: cpe:/o:microsoft:windows
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 33.47 seconds
 ```
