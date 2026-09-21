@@ -1,7 +1,7 @@
 # Dancing
 ## Scope and Objective 
-Target IP: 10.129.136.187
-Service: Redis
+Target IP: 10.129.136.187  
+Service: Redis  
 Environment: HTB Pwnbox  
 
 ## About
